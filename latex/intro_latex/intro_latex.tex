@@ -1,0 +1,338 @@
+\documentclass[12pt]{article}
+
+\input{estructura.tex}
+
+\begin{document}
+\title{A Brief Introduction to \LaTeX}
+\author{Allin Cottrell\\\small revamped by Iñaki Amatria Barral}
+\date{Universidade da Coruña -- Autumn 2019}
+\maketitle
+
+\section{Introduction}
+\noindent
+\TeX{}, written by Donald Knuth, is a very powerful computer typesetting
+program. \LaTeX{}, originally written by Leslie Lamport, is a large set of
+macros (essentially, shortcuts) for \TeX{}. Most people use \LaTeX{}
+rather than ``plain'' \TeX{}. If you want to know, \TeX{} is pronounced
+``tech'' rather than ``tex''.
+
+Typesetting with \LaTeX{} can get as sophisticated as you like---it can be
+used to produce printed copy that is better than most books being
+published these days---but we will stick to the basics here.
+
+The basic idea with \TeX{} and \LaTeX{} is that you start with a plain text
+file containing the text you want to typeset. You indicate the way you want
+the typesetting done by means of certain special codes, most of which begin
+with a backlash ({\tt\char`\\}). When the text file is ready, you compile it
+using the \TeX{} processor, then preview the product on screen. If it is OK
+you can go ahead and print it, otherwise go back to the editing stage,
+re-compile the file, preview it again, and so on.
+
+Superficially, \LaTeX{} looks more difficult to use than a standard word
+processor, because it is not WYSIWYG (``What you see is what you get'').
+As you are typing your basic text file with the typesetting commands
+included, you do not see what it will look like after compilation. But
+after a little practice you will find this is not really a problem. Also,
+when you get to the preview stage, ``what you see'' is a considerably more
+accurate representation of ``what you'll get'' at the printer than with
+ordinary word processors. The great advantages of \LaTeX{} over word
+processors are:
+
+\begin{itemize}
+\item You don't have to fuss with the detailed appearance of your
+document. You concentrate on (a) getting the text right and (b) the
+overall logical structure of the piece. \TeX{} takes care of the detailed
+formatting.
+\item The support for the typesetting of mathematics is unrivaled.
+\item Input files for \TeX{} are entirely portable. If I have a document
+in the form of a \LaTeX{} file I can email it to anyone who has access to
+the \TeX{} processor---wheter on the PC, the Mac, or a Unix system---and
+they will be able to reproduce the same printed document.
+\end{itemize}
+\section{Document skeleton}
+\noindent
+The skeleton of the \LaTeX{} document looks like this
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{l}
+\hline
+{\tt\char`\\documentclass\char`\{article\char`\}}\\
+\\
+{\tt\char`\\begin\char`\{document\char`\}}\\
+{\tt Hello World!}\\
+{\tt This is my very first \char`\\LaTeX\char`\{\char`\}{} document.}\\
+{\tt\char`\\end\char`\{document\char`\}}\\
+\hline
+\end{tabular}
+\caption{A minimal \LaTeX{} file.}
+\end{figure}
+
+The first line specifies the type or class of the document, in this case
+an article. This is the class you are mostly likely to use (other classes
+include report, book, letter and beamer). The default print size for an
+article is 10-point type. If you find it a bit too small you can use the
+11-point (or even the 12-point) option:
+
+\vspace{\baselineskip}
+{\tt\char`\\documentclass[11pt]\char`\{article\char`\}}
+\vspace{\baselineskip}
+
+Beyond that, the {\tt\char`\\begin\char`\{document\char`\}},
+{\tt\char`\\end\char`\{document\char`\}} pair constitutes the minimal
+set of special commands for a ``valid'' \LaTeX{} document. In between
+these commands goes your text.
+
+Moving beyond the minimal involves learning a little about these topics:
+
+\begin{itemize}
+\item Document-structuring commands
+\item Typeface-changing commands
+\item Special characters
+\item \LaTeX{} math mode
+\end{itemize}
+
+We will examine these in turn.
+\section{Document-structuring commands}
+\subsection{Lines and paragraphs}
+\noindent
+You needn't pay much attention to the line breaks in your source file;
+\LaTeX{} will make its own decisions on where to break lines in order to
+produce properly justified text. The only important thing to remember is
+that if you want a paragraph break, insert a blank line, or in other words
+hit the Enter key twice in your source file.
+\subsection{Author, title, date}
+\noindent
+The title and author's name can be inserted at the beginning of the
+document thus
+
+\begin{figure}[H]
+\centering
+\begin{tabular}{l}
+\hline
+{\tt\char`\\title\char`\{Pride and Prejudice\char`\}}\\
+{\tt\char`\\author\char`\{Jane Austen\char`\}}\\
+{\tt\char`\\maketitle}\\
+\hline
+\end{tabular}
+\caption{Author, title declaration.}
+\end{figure}
+
+Coding the elements in this way will automatically put them into a
+centered format, using a larger font than the basic text. The {\tt
+\char`\\maketitle} command also inserts the date on which the
+document is compiled. Since this is inappropriate for {\it Pride and
+Prejudice} it can be overridden by specifying a date before {\tt
+\char`\\ maketitle}.
+
+\vspace{\baselineskip}
+{\tt\char`\\ date\char`\{1813\char`\}}
+
+\subsection{Sectioning}
+\noindent
+Couldn't be easier: Just type \texttt{\char`\\ section\char`\{}\emph{text}%
+{\tt\char`\}}, replacing \emph{text} with the specified section-heading you
+want to use. The section-heading text will be automatically formatted, put
+in the boldface type, and given a number. The numbers will be recalculated
+if you move text around. For instace, the section-heading above was produced
+using
+
+\vspace{\baselineskip}
+\texttt{\char`\\ section\char`\{Doucment-structuring commands\char`\}}
+\vspace{\baselineskip}
+
+\noindent
+Variations: If you want an unnumbered section heading, do
+
+\vspace{\baselineskip}
+\texttt{\char`\\ section*\char`\{Example of unnumbered heading\char`\}}
+\vspace{\baselineskip}
+
+That is, adding a {\tt *} turns off the numbering. If you want a subsection
+heading, use {\tt\char`\\subsection\char`\{\char`\}}. You turn off the
+numbering for subsections in the same way.
+\subsection{Footnotes}
+\noindent
+To insert a footnote, just type (in the text itself, where you want the
+footnote-maker to appear) {\tt\char`\\footnote\char`\{}\emph{text}{\tt%
+\char`\}}, where \emph{text} is replaced by the text of the footnote. The
+notes will be typeset at the foot of the page in a smaller type-size, and
+will be automatically numbered.
+\subsection{Itemized lists}
+\noindent
+To get a bulleted list, just do
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{l}
+\hline
+{\tt\char`\\begin\char`\{itemize\char`\}}\\
+{\tt\char`\\item This is a first item.}\\
+{\tt\char`\\item And this is a second one.}\\
+{\tt\char`\\item And so on...}\\
+{\tt\char`\\end\char`\{itemize\char`\}}\\
+\hline
+\end{tabular}
+\caption{A simple bulleted list.}
+\end{figure}
+
+To have the list enumerated rather than bulleted, use {\tt\char`\\begin%
+\char`\{enumerate\char`\}} and {\tt\char`\\ end\char`\{enumerate\char`\}}
+instead. The numbering will be taken care of automatically.
+\section{Typeface-changing commands}
+\noindent
+You will need less of these than with a standard word processor, because
+\LaTeX{} is smart enough to change the typeface itself, in a consistent and
+pleasing manner, for section-heading, footnotes and other special features
+of the text. But sometimes you want italics for a book-title or for
+emphasis, boldface for emphasis or definitions, or whatever. Here is how
+to do it
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{l l}
+This {\it word} is in italics. & {\tt This \char`\{\char`\\it word%
+\char`\}{} is in italics}.\\
+{\bf These words} in boldface. & {\tt\char`\{\char`\\ bf These words%
+\char`\}{} in boldface}.\\
+Here's one in {\tt typewriter}. & {\tt Here's one in \char`\{\char`\\tt%
+typewriter\char`\}.}\\
+And some {\sc Small Caps}. & {\tt And some \char`\{\char`\\sc Small Caps%
+\char`\}.}\\
+\end{tabular}
+\caption{Simple typeface-changing commands.}
+\end{figure}
+
+That is, put braces {\tt`\char`\{'} and {\tt`\char`\}'} around the text the
+typeface of which you wish to change, and insert the readily memorable code
+for the type-style you want.
+
+\section{Special characters}
+\noindent
+The issue of special characters (outside of the math mode, which is
+discussed below) arises two instances:
+
+\begin{itemize}
+\item When you want a character that is not in the {\tt ASCII}
+character set (and not on the computer keyboard).
+\item When you want to use in your text a character that has a
+special meaning to \TeX.
+\end{itemize}
+
+Take the non-{\tt ASCII} characters first. You can consult one of the
+standard \LaTeX{} references (at the end of this document) for a full
+listing, but here are a few of the most common ones:
+
+\begin{itemize}
+\item Left-hand curly double-quote (``): type two accent graves or whatever
+you want to call them. Type just one of these for a single left-hand quote
+(`).
+\item Right-hand curly double-quote (''): type two single straight quotes.
+Type just one for a single right-hand quote (').
+\item Endash: This is properly used in place of a hyphen in giving number
+ranges (pp. 121--34; the war of 1914--18). Type two hyphens in succession
+({\tt 1914--18}).
+\item Emdash: The proper ``dash'' to use in punctuating text---like this.
+Type three hyphens in succession.
+\end{itemize}
+
+Getting the above-mentioned symbols right is a matter of good style. But
+dealing correctly with the symbols that have a special meaning to \TeX{}
+is essential if your life is to compile correctly. Watch out for the
+following in particular:
+
+\begin{itemize}
+\item The dollar sign ({\tt\$}): This is used as the delimiter for
+\LaTeX{} math mode (see below). If you want a regular dollar sign in your
+text (like this: \$9.99) you must prefix it with a backslash ({\tt%
+like this: \char`\\\$9.99}).
+\item The percent sign ({\tt\%}): This is used as the comment character in
+\TeX{}: Anything following this sign on a given line of a \TeX{} input
+file is ignored by the processor. If you want one in your text, use {\tt%
+\char`\\\%}.
+\item The ampersand ({\tt\&}): This is as the tab character in \TeX{}:
+Type {\tt \char`\\\&} if you want an ampersand to appear in the text.
+\end{itemize}
+\section{\LaTeX{} math mode}
+\noindent
+As mentioned above, the ability to typeset math accurately is one of the
+principal attractions of \TeX{} and \LaTeX{}. To get started at this, you
+need to know the way into the two math modes. To get into inline math
+mode, type a dollar sign, {\tt\$}. Type another one to exit. By the
+``inline math'' I mean mathematical symbols that appear as part of the
+regular text. To get into display math mode (for equations that are a set
+off on lines by themselves), type {\tt \$\$} (or {\tt\char`\\[}). To
+terminate this mode, close with {\tt\$\$} again, or {\tt \char`\\]} if
+you started with {\tt \char`\\ [}. One other variant should be mentioned:
+if you want an automatically numbered equation, enter math mode with
+{\tt\char`\\begin\char`\{equation\char`\}} and exit with {\tt\char`\\%
+end\char`\{equation\char`\}}.
+
+Once in math mode, you don't have to worry about the spacing of what you
+type; \TeX{} will take care of that. You do have to remember some fairly
+simple codes for symbols that do not appear on the keyboard, and for
+special mathematical ways of arranging symbols. The standard refenreces
+will give you all the details. For now, you can learn some of basics by
+example
+
+\begin{figure}[ht]
+\centering
+\begin{tabular}{l l}
+$y = f(x)$ & {\tt\$y = f(x)\$}\\
+$y_t = \alpha + \beta x_t + \epsilon_t$ & {\tt\$y\char`\_t = \char`\\%
+alpha + \char`\\beta x\char`\_t + \char`\\epsilon\char`\_t}\\
+$\frac{1}{3} = 0.333\ldots$ & {\tt\$\char`\\frac\char`\{1\char`\}%
+\char`\{3\char`\}{} = 0.333\char`\\ldots\$}\\
+$8 \times 9 = 72$ & {\tt\$8 \char`\\times 9 = 72\$}\\
+$y = x^2$ & {\tt\$y = x\char`\^2\$}\\
+$p \vee F \equiv p$ & {\tt\$p \char`\\vee F \char`\\equiv p\$}\\
+\end{tabular}
+\caption{Some basic math formulas.}
+\end{figure}
+
+As you can see, in math mode the Greek letters are obtained simply by
+spelling them out in English, preceded by a backslash. To get the
+uppercase versions, just capitalize the first letter (for instace {\tt\$%
+\char`\\Omega\$} gives $\Omega$).
+
+Subscripts and superscripts are obtained in math mode by means of
+{\tt\char`\_} and {\tt\char`\^} respectively. For complex subscripts and
+superscripts, enclose the argument in braces (for instansce {\tt\$K%
+\char`\^\char`\{\char`\\alpha + \char`\\beta\char`\}\$} gives
+$K^{\alpha + \beta}$).
+\section{Files and filenames}
+\noindent
+At this point it may also be useful to learn about the file-naming
+conventions in the \TeX{} world. Your input file (text plus formatting
+commands) is typically given a {\tt .tex} extension (for instance
+{\tt my\char`\_file.tex}). The \TeX{} processor takes this as input and
+outputs a {\tt .pdf} file (e.g. {\tt my\char`\_file.pdf}). In the process
+of creating a {\tt pdf} file, the processor also writes a {\tt log} file
+and an {\tt aux} file. Generally you won't be much concerned with these,
+but if things go wrong the log file may contain some useful information.
+\section{About the software}
+\noindent
+Although these pieces of software may be bundled together in a package, you
+need three distincts programs to constitute a fully functional \LaTeX{}
+system.
+
+\begin{enumerate}
+\item A suitable editor for preparing and modifying your input files.
+\item The \TeX{} processor itself.
+\item A program to display the compiled version of your file on screen.
+\end{enumerate}
+
+The wonderful thing about all this software is that is in the public
+domain. You can download it for free from any of many archive sites
+maintained at both academic institutions and commercial Internet servers
+around the world.
+\section*{Further reading}
+\noindent
+The basic source on \LaTeX{} is Leslie Lamport's {\it \LaTeX{}, A Document
+Preparation System}, Second Edition, Addison-Wesley, 1994. Another useful
+reference is Gooseens {\it et al.}, {\it The \LaTeX{} Companion},
+Addison-Wesley, 1994. For anyone who gets an urge to do some serious
+\TeX{} hacking (you can customize \emph{any} aspect of \TeX{}'s operation
+if you're willing to learn a bit about the language), the essential
+reference is Donald Knuth, {\it The \TeX{}Book}, also Addison-Wesly 1994.
+\end{document}
